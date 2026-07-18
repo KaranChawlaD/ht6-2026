@@ -1,9 +1,9 @@
 /*
   HT626 — Potentiometers on A0/A1 (3.3V–GND).
-  Pot 1 (A0): Keyboard A / D from voltage thresholds.
-    > 1.9 V → hold 'A'
-    < 1.0 V → hold 'D'
-    else    → release both
+  Pot 1 (A0): 5-band keyboard zones
+    0.0–1.4 V → ; l k j h
+    1.4–1.9 V → (dead zone, no key)
+    1.9–3.3 V → g f d s a
 */
 
 #include <Keyboard.h>
@@ -13,10 +13,15 @@ const int POT_A1 = A1;
 const float ADC_VREF = 5.0;   // Leonardo DEFAULT reference (AVCC)
 const int ADC_MAX = 1023;     // 10-bit ADC
 
-const float THRESH_A = 1.9;   // pot1 high → 'A'
-const float THRESH_D = 1.4;   // pot1 low  → 'D'
+const float LOW_MIN  = 0.0;
+const float LOW_MAX  = 1.4;
+const float HIGH_MIN = 1.9;
+const float HIGH_MAX = 3.3;
 
-char heldKey = 0;             // currently held key, or 0
+const char KEYS_LOW[]  = { ';', 'l', 'k', 'j', 'h' };
+const char KEYS_HIGH[] = { 'g', 'f', 'd', 's', 'a' };
+
+char heldKey = 0;
 
 void setKey(char key) {
   if (key == heldKey) {
@@ -31,6 +36,25 @@ void setKey(char key) {
   heldKey = key;
 }
 
+// Map v in [lo, hi] to one of 5 keys (equal sections).
+char keyFromRange(float v, float lo, float hi, const char keys[5]) {
+  float t = (v - lo) / (hi - lo);
+  int idx = (int)(t * 5.0);
+  if (idx < 0) idx = 0;
+  if (idx > 4) idx = 4;
+  return keys[idx];
+}
+
+char keyFromPot1(float v) {
+  if (v <= LOW_MAX) {
+    return keyFromRange(v, LOW_MIN, LOW_MAX, KEYS_LOW);
+  }
+  if (v >= HIGH_MIN) {
+    return keyFromRange(v, HIGH_MIN, HIGH_MAX, KEYS_HIGH);
+  }
+  return 0;  // dead zone
+}
+
 void setup() {
   Serial.begin(9600);
   unsigned long start = millis();
@@ -39,7 +63,7 @@ void setup() {
   }
 
   Keyboard.begin();
-  Serial.println(F("HT626 pot1=A/D  (A0 >1.9=A, <1.0=D)"));
+  Serial.println(F("HT626 pot1: 0-1.4=;lkjh  1.9-3.3=gfdsa"));
 }
 
 void loop() {
@@ -48,13 +72,7 @@ void loop() {
   float v0 = raw0 * (ADC_VREF / ADC_MAX);
   float v1 = raw1 * (ADC_VREF / ADC_MAX);
 
-  char want = 0;
-  if (v0 > THRESH_A) {
-    want = 'a';
-  } else if (v0 < THRESH_D) {
-    want = 'd';
-  }
-  setKey(want);
+  setKey(keyFromPot1(v0));
 
   Serial.print(F("A0="));
   Serial.print(v0, 3);
