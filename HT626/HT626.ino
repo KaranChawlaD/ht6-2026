@@ -12,6 +12,7 @@
   Pot 2 (A1): throttle
     0.0–0.3 V → glide (zero throttle, no key held)
     0.4–3.3 V → 5 equal throttle-level zones (z x c v b, low -> high)
+  Button on pin 7 (to GND): taps 'r' on each press (while armed).
 */
 
 #include <Keyboard.h>
@@ -20,6 +21,9 @@ const int POT_A0 = A0;
 const int POT_A1 = A1;
 // Pull-up: HIGH = safe (no typing). Connect pin 2 to GND to enable keys.
 const int KEYBOARD_ENABLE_PIN = 2;
+// Pull-up button: press connects pin 7 to GND.
+const int BUTTON_R_PIN = 7;
+const unsigned long BUTTON_DEBOUNCE_MS = 30;
 
 const float ADC_VREF = 5.0;   // Leonardo DEFAULT reference (AVCC)
 const int ADC_MAX = 1023;     // 10-bit ADC
@@ -46,6 +50,10 @@ int currentThrottleZone = THROTTLE_NOT_INIT;
 char heldKey1 = 0;
 char heldThrottleKey = 0;
 bool keyboardArmed = false;
+
+bool buttonRLastStable = HIGH;   // INPUT_PULLUP idle
+bool buttonRLastRaw = HIGH;
+unsigned long buttonRLastChangeMs = 0;
 
 void releaseAllKeys() {
   if (heldKey1 || heldThrottleKey) {
@@ -131,8 +139,31 @@ bool keyboardEnableRequested() {
   return digitalRead(KEYBOARD_ENABLE_PIN) == LOW;
 }
 
+// Debounced falling edge on pin 7 -> one 'r' keystroke.
+void pollButtonR() {
+  bool raw = digitalRead(BUTTON_R_PIN);
+  unsigned long now = millis();
+
+  if (raw != buttonRLastRaw) {
+    buttonRLastRaw = raw;
+    buttonRLastChangeMs = now;
+  }
+
+  if ((now - buttonRLastChangeMs) < BUTTON_DEBOUNCE_MS) {
+    return;
+  }
+
+  if (raw != buttonRLastStable) {
+    buttonRLastStable = raw;
+    if (raw == LOW) {
+      Keyboard.write('r');
+    }
+  }
+}
+
 void setup() {
   pinMode(KEYBOARD_ENABLE_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_R_PIN, INPUT_PULLUP);
 
   delay(2500);
 
@@ -143,7 +174,7 @@ void setup() {
   }
 
   Serial.println(F("HT626 SAFE: keyboard OFF until pin 2 -> GND"));
-  Serial.println(F("pot1: 0-1.4=;lkjh  1.9-3.3=gfdsa | throttle: 0-0.3=glide 0.4-3.3=zxcvb"));
+  Serial.println(F("pot1: 0-1.4=;lkjh  1.9-3.3=gfdsa | throttle: zxcvb | btn7=r"));
 }
 
 void loop() {
@@ -171,10 +202,14 @@ void loop() {
     int rawZone = throttleZoneFromVoltage(v1);
     currentThrottleZone = applyThrottleHysteresis(rawZone, v1);
     setKey(throttleKeyForZone(currentThrottleZone), &heldThrottleKey);
+
+    pollButtonR();
   } else {
     heldKey1 = 0;
     heldThrottleKey = 0;
     currentThrottleZone = THROTTLE_NOT_INIT;
+    buttonRLastStable = HIGH;
+    buttonRLastRaw = HIGH;
   }
 
   Serial.print(F("A0="));
