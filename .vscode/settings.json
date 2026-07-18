@@ -1,0 +1,19 @@
+{
+  "arduino.path": "",
+  "arduino.useArduinoCli": true,
+  "arduino.commandPath": "arduino-cli",
+  "arduino.defaultBaudRate": 9600,
+  "files.associations": {
+    "*.ino": "cpp"
+  },
+  "C_Cpp.default.defines": [
+    "ARDUINO=10808",
+    "ARDUINO_AVR_LEONARDO",
+    "ARDUINO_ARCH_AVR",
+    "USBCON",
+    "USB_VID=0x2341",
+    "USB_PID=0x8036"
+  ],
+  "C_Cpp.default.compilerPath": "",
+  "C_Cpp.default.intelliSenseMode": "gcc-x64"
+}

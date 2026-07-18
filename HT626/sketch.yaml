@@ -1,0 +1,6 @@
+default_fqbn: arduino:avr:leonardo
+profiles:
+  leonardo:
+    fqbn: arduino:avr:leonardo
+    platforms:
+      - platform: arduino:avr (1.8.8)
