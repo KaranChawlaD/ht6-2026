@@ -38,7 +38,7 @@ const char KEYS_HIGH[] = { 'g', 'f', 'd', 's', 'a' };
 
 const float THROTTLE_DEAD_MAX   = 0.3;
 const float THROTTLE_ACTIVE_MIN = 0.4;
-const float THROTTLE_ACTIVE_MAX = 3.3;
+const float THROTTLE_ACTIVE_MAX = 1.2;
 const char THROTTLE_KEYS[] = { 'z', 'x', 'c', 'v', 'b' };
 const int THROTTLE_ZONES = sizeof(THROTTLE_KEYS) / sizeof(THROTTLE_KEYS[0]);
 const float THROTTLE_HYSTERESIS_V = 0.05;
