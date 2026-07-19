@@ -1,0 +1,711 @@
+[
+  {
+    "added_include_path": "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino"
+  },
+  {
+    "added_include_path": "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo"
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": "Keyboard.h"
+  },
+  {
+    "added_include_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src"
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": "HID.h"
+  },
+  {
+    "added_include_path": "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src"
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\sketch\\HT626.ino.cpp.merged.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\Keyboard.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\Keyboard.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\Keyboard.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\Keyboard.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_da_DK.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_da_DK.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_da_DK.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_da_DK.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_de_DE.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_de_DE.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_de_DE.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_de_DE.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_en_US.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_en_US.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_en_US.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_en_US.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_es_ES.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_es_ES.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_es_ES.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_es_ES.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_fr_FR.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_fr_FR.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_fr_FR.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_fr_FR.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_hu_HU.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_hu_HU.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_hu_HU.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_hu_HU.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_it_IT.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_it_IT.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_it_IT.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_it_IT.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_pt_PT.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_pt_PT.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_pt_PT.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_pt_PT.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_sv_SE.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_sv_SE.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src\\KeyboardLayout_sv_SE.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\Keyboard\\KeyboardLayout_sv_SE.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src\\HID.cpp",
+      "depfile_path": "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\HID\\HID.cpp.libsdetect.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7/bin/avr-g++",
+        "-c",
+        "-g",
+        "-Os",
+        "-w",
+        "-std=gnu++11",
+        "-fpermissive",
+        "-fno-exceptions",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fno-threadsafe-statics",
+        "-Wno-error=narrowing",
+        "-flto",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-mmcu=atmega32u4",
+        "-DF_CPU=16000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_AVR_LEONARDO",
+        "-DARDUINO_ARCH_AVR",
+        "-DUSB_VID=0x2341",
+        "-DUSB_PID=0x8036",
+        "-DUSB_MANUFACTURER=\"Unknown\"",
+        "-DUSB_PRODUCT=\"Arduino Leonardo\"",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\cores\\arduino",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\variants\\leonardo",
+        "-IC:\\Users\\user\\OneDrive\\Documents\\Arduino\\libraries\\Keyboard\\src",
+        "-IC:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src",
+        "C:\\Users\\user\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.8\\libraries\\HID\\src\\HID.cpp",
+        "-o",
+        "nul",
+        "-MMD",
+        "-MF",
+        "C:\\Users\\user\\Documents\\Projects\\HT626\\build\\libraries\\HID\\HID.cpp.libsdetect.d"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  }
+]
