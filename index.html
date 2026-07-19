@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Precision Moto Parking 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    color-scheme: dark;
+    --dash: #12171d;
+    --dash-face: #0c1015;
+    --bezel: linear-gradient(145deg, #3a414a 0%, #1a1f26 42%, #2c333c 100%);
+    --line: rgba(180,190,205,.22);
+    --green: #6edc8a;
+    --yellow: #e8c45a;
+    --red: #e85a5a;
+    --muted: #8b95a3;
+    --lcd: #c8d2bc;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #05080d; font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; color: #e8edf2; }
+  #app { position: relative; width: 100%; height: 100%; min-height: 620px; overflow: hidden; background: #7ca2ba; }
+  #game { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #hud { position: absolute; inset: 16px 16px auto 16px; display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 12px; pointer-events: none; }
+  .panel {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.06), transparent 28%),
+      linear-gradient(165deg, #1a2028 0%, var(--dash) 55%, #0a0d11 100%);
+    border: 1px solid rgba(0,0,0,.55);
+    border-radius: 10px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.12),
+      inset 0 -1px 0 rgba(0,0,0,.35),
+      0 10px 28px rgba(0,0,0,.4);
+  }
+  #levelPanel { justify-self: start; min-width: 248px; padding: 11px 14px 12px; }
+  #levelKicker, #gearKicker { font-family: "Barlow Condensed", sans-serif; font-size: 12px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+  #levelText { font-family: "Barlow Condensed", sans-serif; font-size: 22px; font-weight: 700; margin-top: 2px; letter-spacing: .02em; }
+  #levelSub { font-size: 12px; color: #a8b3c0; margin-top: 3px; font-weight: 500; }
+  #gearPanel { justify-self: end; min-width: 118px; padding: 10px 16px 11px; text-align: center; }
+  #gearText {
+    margin-top: 4px; font-family: "Barlow Condensed", sans-serif; font-size: 40px; font-weight: 700; line-height: 1;
+    color: var(--green); text-shadow: 0 0 12px rgba(110,220,138,.25);
+    background: radial-gradient(ellipse at 50% 40%, #1a2218, var(--dash-face));
+    border-radius: 6px; border: 1px solid rgba(0,0,0,.5);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+    padding: 4px 0 2px;
+  }
+  #gearHint { margin-top: 6px; font-family: "Barlow Condensed", sans-serif; font-size: 11px; letter-spacing: .14em; color: #7d8794; font-weight: 600; }
+  #speedometer {
+    position: absolute; right: 20px; bottom: 28px; width: 168px; height: 168px; border-radius: 50%;
+    background: var(--bezel);
+    border: 2px solid #0a0c0f;
+    box-shadow:
+      inset 0 2px 3px rgba(255,255,255,.18),
+      inset 0 -3px 6px rgba(0,0,0,.55),
+      0 14px 36px rgba(0,0,0,.45);
+    display: grid; place-items: center; pointer-events: none;
+  }
+  #speedFace {
+    width: 142px; height: 142px; border-radius: 50%; position: relative;
+    background:
+      radial-gradient(circle at 50% 42%, #1c222a 0%, #0b0e12 72%, #050607 100%);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: inset 0 0 24px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  #speedTicks { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #speedNeedle {
+    position: absolute; left: 50%; top: 50%; width: 3px; height: 48px;
+    margin-left: -1.5px; margin-top: -44px;
+    background: linear-gradient(180deg, #e85a5a, #c43a3a 70%, #fff 100%);
+    border-radius: 2px; transform-origin: 50% 90%;
+    transform: rotate(-120deg);
+    box-shadow: 0 0 6px rgba(232,90,90,.35);
+    transition: transform .08s linear;
+  }
+  #speedHub {
+    position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+    border-radius: 50%; background: linear-gradient(145deg, #4a5058, #1a1e24);
+    border: 1px solid rgba(255,255,255,.2); box-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+  #speedInner { position: absolute; left: 0; right: 0; bottom: 28px; text-align: center; }
+  #speedValue { font-family: "Barlow Condensed", sans-serif; font-size: 36px; font-weight: 700; line-height: .9; font-variant-numeric: tabular-nums; color: var(--lcd); text-shadow: 0 0 8px rgba(200,210,188,.2); }
+  #speedUnit { font-family: "Barlow Condensed", sans-serif; font-size: 11px; color: #7a8490; letter-spacing: .18em; margin-top: 2px; font-weight: 600; }
+  #parkingMeter { position: absolute; left: 18px; bottom: 36px; width: 320px; padding: 14px 14px; pointer-events: none; }
+  #meterTrack {
+    height: 16px; margin: 0; background: #06080b; border-radius: 4px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1); box-shadow: inset 0 1px 4px rgba(0,0,0,.65);
+  }
+  #meterFill { width: 0%; height: 100%; background: linear-gradient(90deg, #c9a036, #6edc8a); transition: width .1s ease-out; }
+  #overlay { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 42%, rgba(11,20,32,.46), rgba(3,6,11,.82)); opacity: 0; pointer-events: none; transition: opacity .22s ease; }
+  #overlay.visible { opacity: 1; pointer-events: auto; }
+  #overlayCard {
+    width: min(570px, 90vw); padding: 28px 32px; text-align: center;
+    background: linear-gradient(165deg, #1c232c, #0d1116);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 28px 70px rgba(0,0,0,.55);
+  }
+  #overlayTitle { margin: 0; font-family: "Barlow Condensed", sans-serif; font-size: clamp(32px, 5vw, 48px); line-height: 1; letter-spacing: .01em; font-weight: 700; }
+  #overlayBody { margin: 14px auto 0; color: #b8c1cc; font-size: 15px; line-height: 1.55; max-width: 480px; }
+  #overlayButton {
+    margin-top: 22px; border: 0; border-radius: 8px; padding: 12px 22px;
+    background: linear-gradient(180deg, #7ae49a, #45b86a); color: #06110b;
+    font: inherit; font-weight: 700; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 8px 22px rgba(69,184,106,.28);
+  }
+  #overlayButton:hover { filter: brightness(1.05); }
+  #damageFlash { position: absolute; inset: 0; background: #ff344b; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
+  @media (max-width: 860px) {
+    #hud { grid-template-columns: 1fr auto; }
+    #parkingMeter { width: min(280px, 70vw); }
+    #speedometer { width: 136px; height: 136px; bottom: 18px; right: 14px; }
+    #speedFace { width: 114px; height: 114px; }
+    #speedValue { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="game" aria-label="Motorcycle parking game"></canvas>
+  <div id="hud">
+    <div class="panel" id="levelPanel">
+      <div id="levelKicker">Parking challenge</div>
+      <div id="levelText">Level 1 · Open Approach</div>
+      <div id="levelSub">Precision parking</div>
+    </div>
+    <div class="panel" id="gearPanel">
+      <div id="gearKicker">Gear</div>
+      <div id="gearText">D</div>
+      <div id="gearHint">R TOGGLE</div>
+    </div>
+  </div>
+
+  <div class="panel" id="parkingMeter">
+    <div id="meterTrack"><div id="meterFill"></div></div>
+  </div>
+
+  <div id="speedometer">
+    <div id="speedFace">
+      <canvas id="speedTicks" width="142" height="142" aria-hidden="true"></canvas>
+      <div id="speedNeedle"></div>
+      <div id="speedHub"></div>
+      <div id="speedInner"><div id="speedValue">0</div><div id="speedUnit">KM/H</div></div>
+    </div>
+  </div>
+
+  <div id="damageFlash"></div>
+  <div id="overlay" class="visible">
+    <div id="overlayCard">
+      <h1 id="overlayTitle">Precision Moto Parking 3D</h1>
+      <div id="overlayBody">Drive through five increasingly packed parking lots, toggle reverse with R, and stop with the entire motorcycle inside the yellow bay.</div>
+      <button id="overlayButton">Start Level 1</button>
+    </div>
+  </div>
+</div>
+<script>
+(() => {
+  'use strict';
+
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const levelText = document.getElementById('levelText');
+  const levelSub = document.getElementById('levelSub');
+  const gearText = document.getElementById('gearText');
+  const speedValue = document.getElementById('speedValue');
+  const speedNeedle = document.getElementById('speedNeedle');
+  const speedTicks = document.getElementById('speedTicks');
+  const meterFill = document.getElementById('meterFill');
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlayBody = document.getElementById('overlayBody');
+  const overlayButton = document.getElementById('overlayButton');
+  const damageFlash = document.getElementById('damageFlash');
+
+  let W = 1600, H = 900, DPR = 1;
+  let focal = 1000, horizon = 310;
+  let lastTime = performance.now();
+  let currentLevel = 0;
+  let mode = 'intro';
+  let gear = 'D';
+  let cameraShake = 0;
+  let flash = 0;
+  let parkedHold = 0;
+  let reverseEntrySeen = false;
+  let particles = [];
+  const keys = new Set();
+
+  const LEFT = { a:1.00, s:.80, d:.60, f:.40, g:.20 };
+  const RIGHT = { h:.20, j:.40, k:.60, l:.80, ';':1.00 };
+  const THROTTLE = { z:.20, x:.40, c:.60, v:.80, b:1.00 };
+
+  // The chase-camera motorcycle artwork includes handlebars, rider, and soft shadows.
+  // Collision uses the actual hard motorcycle chassis/wheel footprint instead of that full sprite silhouette.
+  const BIKE_PARKING = { width:.70, length:1.96 };
+  const BIKE_COLLISION = { width:.60, length:1.76 };
+  const COLLISION_TOLERANCE = .025;
+  const CAR = { width:2.05, length:4.35, height:1.48 };
+  const palette = ['#d84f5d','#4388c4','#e1aa36','#62a873','#8f6dcc','#d26d43','#5b9d9b','#9ba3ad'];
+
+  const bike = {
+    x: 0, z: 0, heading: 0, speed: 0, steer: 0, lean: 0, throttle: 0,
+    maxForward: 7.4, maxReverse: 4.1, acceleration: 3.55,
+    reverseAcceleration: 2.65, drag: 1.85, rolling: .68
+  };
+
+  const camera = { x:0, z:-6, yaw:0, height:3.1 };
+
+  function car(x,z,heading=0,color=0,label='') { return {x,z,heading,width:CAR.width,length:CAR.length,height:CAR.height,color:palette[color%palette.length],label}; }
+  function curb(x,z,width,length,heading=0,height=.22) { return {x,z,width,length,heading,height}; }
+  function spot(x,z,width,length,heading=0) { return {x,z,width,length,heading}; }
+
+  const levels = [
+    {
+      name:'Open Approach', sub:'A generous bay with an open approach.',
+      bounds:{x:0,z:24,width:34,length:52}, start:{x:0,z:3,heading:0},
+      spot:spot(0,42,2.55,5.15,0),
+      cars:[car(-5.0,42,0,0),car(-2.65,42,0,1),car(2.65,42,0,2),car(5.0,42,0,3),car(-12,18,Math.PI/2,4),car(12,18,Math.PI/2,5)],
+      curbs:[curb(-16.7,24,.6,52),curb(16.7,24,.6,52),curb(0,50,34,.6)],
+      tip:'Approach straight, release the throttle early, and centre the bike.'
+    },
+    {
+      name:'Corner Entry', sub:'A wide corner bay with room to turn.',
+      bounds:{x:0,z:25,width:38,length:54}, start:{x:-9,z:8,heading:0},
+      spot:spot(8.0,38.5,3.05,5.4,Math.PI/2),
+      cars:[
+        car(-13,41,0,0),car(-10.2,41,0,1),car(-7.4,41,0,2),car(-4.6,41,0,3),car(-1.8,41,0,4),
+        car(14.8,38.5,Math.PI/2,0),car(1.6,38.5,Math.PI/2,2),
+        car(-12,17,Math.PI/2,3)
+      ],
+      curbs:[curb(-18.7,25,.6,54),curb(18.7,25,.6,54),curb(0,51.7,38,.6)],
+      tip:'Drive up the lane, then make one smooth right turn into the yellow bay.'
+    },
+    {
+      name:'Packed Aisles', sub:'A narrow operating lane with cars on both sides.',
+      bounds:{x:0,z:27,width:40,length:58}, start:{x:-14,z:3,heading:0},
+      spot:spot(11.8,46,1.85,3.75,0),
+      cars:[
+        car(-15.2,46,0,0),car(-12.75,46,0,1),car(-10.3,46,0,2),car(-7.85,46,0,3),car(-5.4,46,0,4),car(-2.95,46,0,5),car(-.5,46,0,6),car(1.95,46,0,7),car(4.4,46,0,0),car(6.85,46,0,1),car(9.3,46,0,2),car(14.3,46,0,3),car(16.75,46,0,4),
+        car(-15.2,22,0,5),car(-12.75,22,0,6),car(-10.3,22,0,7),car(-7.85,22,0,0),car(-5.4,22,0,1),car(-2.95,22,0,2),car(.0,22,0,3),car(3.0,22,0,4),car(6.0,22,0,5),car(9.0,22,0,6),car(12.0,22,0,7),car(15.0,22,0,0),
+        car(-3.5,34,Math.PI/2,2),car(8.5,34,Math.PI/2,5)
+      ],
+      curbs:[curb(-19.7,27,.6,58),curb(19.7,27,.6,58),curb(0,55.7,40,.6),curb(0,-1.7,40,.6)],
+      tip:'Use light steering keys near parked cars; the visual body and collision body match.'
+    },
+    {
+      name:'Reverse Pocket', sub:'Only a true reverse-in, outward-facing finish counts.',
+      bounds:{x:0,z:28,width:42,length:60}, start:{x:-15,z:5,heading:0},
+      spot:spot(12.2,49.2,1.65,3.35,0),
+      // The motorcycle must finish facing back toward the aisle. This distinguishes a true reverse-in park from a head-in park.
+      requiredHeading:Math.PI,
+      headingTolerance:Math.PI/9,
+      requireReverseEntry:true,
+      cars:[
+        car(-16,49.2,0,0),car(-13.55,49.2,0,1),car(-11.1,49.2,0,2),car(-8.65,49.2,0,3),car(-6.2,49.2,0,4),car(-3.75,49.2,0,5),car(-1.3,49.2,0,6),car(1.15,49.2,0,7),car(3.6,49.2,0,0),car(6.05,49.2,0,1),car(8.5,49.2,0,2),car(15.9,49.2,0,3),car(18.35,49.2,0,4),
+        car(-16,23,0,5),car(-13.55,23,0,6),car(-11.1,23,0,7),car(-8.65,23,0,0),car(-6.2,23,0,1),car(-3.75,23,0,2),car(-1.3,23,0,3),car(1.15,23,0,4),car(3.6,23,0,5),car(6.05,23,0,6),car(8.5,23,0,7),car(10.95,23,0,0),car(13.4,23,0,1),car(15.85,23,0,2),car(18.3,23,0,3),
+        car(-8,36,Math.PI/2,4),car(3,36,Math.PI/2,5)
+      ],
+      curbs:[curb(-20.7,28,.6,60),curb(20.7,28,.6,60),curb(0,57.7,42,.6),curb(17.8,43,.8,8)],
+      tip:'Reverse into the bay. Your front wheel must face back toward the aisle.'
+    },
+    {
+      name:'Parallel Lock', sub:'A parallel parking finale with almost no spare room.',
+      bounds:{x:0,z:28,width:44,length:60}, start:{x:-16,z:31,heading:Math.PI/2},
+      // Narrow motorcycle-sized rectangle aligned with the two neighbouring cars.
+      // A perpendicular motorcycle cannot fit inside this bay, so the level genuinely requires parallel parking.
+      spot:spot(2.0,46.0,1.08,2.55,Math.PI/2),
+      cars:[
+        car(-18.2,46,Math.PI/2,0),car(-13.5,46,Math.PI/2,1),car(-8.8,46,Math.PI/2,2),car(-2.0,46,Math.PI/2,3),car(5.9,46,Math.PI/2,4),car(10.6,46,Math.PI/2,5),car(15.3,46,Math.PI/2,6),car(20.0,46,Math.PI/2,7),
+        car(-17.5,24,Math.PI/2,7),car(-12.8,24,Math.PI/2,0),car(-8.1,24,Math.PI/2,1),car(-3.4,24,Math.PI/2,2),car(1.3,24,Math.PI/2,3),car(6.0,24,Math.PI/2,4),car(10.7,24,Math.PI/2,5),car(15.4,24,Math.PI/2,6),
+        car(19.5,35,0,7),car(-20,35,0,2)
+      ],
+      curbs:[curb(0,51.4,44,.7),curb(0,18.6,44,.7),curb(-21.7,35,.6,33),curb(21.7,35,.6,33)],
+      tip:'Pull alongside the front car, reverse diagonally into the gap, then counter-steer hard.'
+    }
+  ];
+
+  function resize() {
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    const r = canvas.getBoundingClientRect();
+    W = Math.max(800, Math.round(r.width)); H = Math.max(560, Math.round(r.height));
+    canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    focal = Math.min(W*1.02, H*1.55);
+    horizon = H * .34;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function current() { return levels[currentLevel]; }
+  function forward(h) { return {x:Math.sin(h), z:Math.cos(h)}; }
+  function right(h) { return {x:Math.cos(h), z:-Math.sin(h)}; }
+  function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function lerpAngle(a,b,t){ let d=((b-a+Math.PI)%(Math.PI*2))-Math.PI; return a+d*t; }
+  function rgba(hex,a){
+    const n=parseInt(hex.slice(1),16); return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`;
+  }
+
+  function resetLevel() {
+    const s=current().start;
+    bike.x=s.x; bike.z=s.z; bike.heading=s.heading; bike.speed=0; bike.steer=0; bike.lean=0; bike.throttle=0;
+    gear='D'; parkedHold=0; reverseEntrySeen=false; particles=[];
+    const f=forward(bike.heading);
+    camera.x=bike.x-f.x*7.6; camera.z=bike.z-f.z*7.6; camera.yaw=bike.heading;
+    mode='playing'; updateHud();
+  }
+
+  function updateHud() {
+    levelText.textContent=`Level ${currentLevel+1} · ${current().name}`;
+    levelSub.textContent=current().sub;
+    gearText.textContent=gear;
+    gearText.style.color=gear==='D'?'var(--green)':'var(--yellow)';
+  }
+
+  function strongest(map) {
+    let value=0;
+    for (const [k,v] of Object.entries(map)) if(keys.has(k)) value=Math.max(value,v);
+    return value;
+  }
+
+  function rectCorners(o) {
+    const f=forward(o.heading), r=right(o.heading);
+    const hw=o.width/2, hl=o.length/2;
+    return [
+      {x:o.x+r.x*hw+f.x*hl,z:o.z+r.z*hw+f.z*hl},
+      {x:o.x-r.x*hw+f.x*hl,z:o.z-r.z*hw+f.z*hl},
+      {x:o.x-r.x*hw-f.x*hl,z:o.z-r.z*hw-f.z*hl},
+      {x:o.x+r.x*hw-f.x*hl,z:o.z+r.z*hw-f.z*hl}
+    ];
+  }
+
+  function projectAxis(points,axis){let mn=Infinity,mx=-Infinity;for(const p of points){const v=p.x*axis.x+p.z*axis.z;mn=Math.min(mn,v);mx=Math.max(mx,v);}return {mn,mx};}
+  function overlapOBB(a,b,tolerance=0){
+    const ac=rectCorners(a),bc=rectCorners(b),axes=[];
+    for(const pts of [ac,bc]) for(let i=0;i<2;i++){
+      const p=pts[i],q=pts[(i+1)%4],dx=q.x-p.x,dz=q.z-p.z,len=Math.hypot(dx,dz);
+      axes.push({x:-dz/len,z:dx/len});
+    }
+    for(const ax of axes){
+      const A=projectAxis(ac,ax),B=projectAxis(bc,ax);
+      // A tiny tolerance prevents anti-aliased visual edges from reading as a collision before hard surfaces meet.
+      if(A.mx<=B.mn+tolerance||B.mx<=A.mn+tolerance)return false;
+    }
+    return true;
+  }
+
+  function bikeCollisionBody(){return {x:bike.x,z:bike.z,width:BIKE_COLLISION.width,length:BIKE_COLLISION.length,heading:bike.heading};}
+  function bikeParkingBody(){return {x:bike.x,z:bike.z,width:BIKE_PARKING.width,length:BIKE_PARKING.length,heading:bike.heading};}
+  function fullyInsideSpot() {
+    const s=current().spot, c=Math.cos(-s.heading), sn=Math.sin(-s.heading);
+    for(const p of rectCorners(bikeParkingBody())){
+      const dx=p.x-s.x,dz=p.z-s.z;
+      const lx=dx*c-dz*sn,lz=dx*sn+dz*c;
+      if(Math.abs(lx)>s.width/2-.03||Math.abs(lz)>s.length/2-.03)return false;
+    }
+    return true;
+  }
+
+  function angleDifference(a,b){
+    return Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
+  }
+
+  function requiredDirectionMet(){
+    const level=current();
+    if(typeof level.requiredHeading!=='number') return true;
+    return angleDifference(bike.heading,level.requiredHeading) <= (level.headingTolerance || Math.PI/8);
+  }
+
+  function reverseEntryRequirementMet(){
+    return !current().requireReverseEntry || reverseEntrySeen;
+  }
+
+  function alignmentPercent(){
+    const level=current(),s=level.spot,c=Math.cos(-s.heading),sn=Math.sin(-s.heading);
+    const dx=bike.x-s.x,dz=bike.z-s.z;
+    const lx=dx*c-dz*sn,lz=dx*sn+dz*c;
+    const pos=clamp(1-Math.hypot(lx/(s.width*2.2),lz/(s.length*2.2)),0,1);
+    let ad;
+    if(typeof level.requiredHeading==='number') {
+      // Direction matters in Level 4: facing into the curb is not equivalent to facing out toward the aisle.
+      ad=angleDifference(bike.heading,level.requiredHeading);
+    } else {
+      ad=angleDifference(bike.heading,s.heading);
+      ad=Math.min(ad,Math.abs(Math.PI-ad));
+    }
+    const ang=clamp(1-ad/(Math.PI/2),0,1);
+    return Math.round((pos*.72+ang*.28)*100);
+  }
+
+  function collides() {
+    const b=bikeCollisionBody();
+    const bounds=current().bounds;
+    for(const p of rectCorners(b)){
+      if(p.x<bounds.x-bounds.width/2||p.x>bounds.x+bounds.width/2||p.z<bounds.z-bounds.length/2||p.z>bounds.z+bounds.length/2)return true;
+    }
+    for(const c of current().cars) if(overlapOBB(b,c,COLLISION_TOLERANCE)) return true;
+    for(const c of current().curbs) if(overlapOBB(b,c,COLLISION_TOLERANCE)) return true;
+    return false;
+  }
+
+  function fail() {
+    if(mode!=='playing')return;
+    mode='failed'; bike.speed=0; cameraShake=24; flash=1;
+    overlayTitle.textContent='Collision'; overlayTitle.style.color='var(--red)';
+    overlayBody.textContent='The motorcycle’s hard chassis or wheels contacted a parked vehicle or curb. The attempt ends immediately. Retry with lighter throttle and gentler steering near obstacles.';
+    overlayButton.textContent='Retry Level';
+    setTimeout(()=>overlay.classList.add('visible'),180);
+    playCrash();
+  }
+
+  function complete() {
+    if(mode!=='playing')return;
+    mode='complete'; bike.speed=0; spawnSuccess(); playSuccess();
+    overlayTitle.style.color='var(--green)';
+    if(currentLevel===levels.length-1){
+      overlayTitle.textContent='Parking Mastered';
+      overlayBody.textContent='You completed all five motorcycle parking challenges, including the final parallel-parking lock.';
+      overlayButton.textContent='Play Again';
+    } else {
+      overlayTitle.textContent=`Level ${currentLevel+1} Complete`;
+      overlayBody.textContent=currentLevel===3
+        ? 'Reverse Pocket cleared. The motorcycle was fully inside the bay, nearly stopped, and facing outward toward the aisle.'
+        : `${current().name} cleared. The motorcycle was fully inside the bay and nearly stopped.`;
+      overlayButton.textContent=`Start Level ${currentLevel+2}`;
+    }
+    setTimeout(()=>overlay.classList.add('visible'),450);
+  }
+
+  function startOrAdvance(){
+    ensureAudio();
+    if(mode==='complete') currentLevel=(currentLevel+1)%levels.length;
+    resetLevel(); overlay.classList.remove('visible'); overlayTitle.style.color='';
+  }
+  overlayButton.addEventListener('click',startOrAdvance);
+
+  function update(dt) {
+    const sec=Math.min(.033,dt/1000);
+    if(mode==='playing'){
+      const left=strongest(LEFT),rightVal=strongest(RIGHT);
+      const steerTarget=rightVal-left;
+      // Softer steer/lean response so inputs blend instead of snapping.
+      bike.steer=lerp(bike.steer,steerTarget,1-Math.pow(.018,sec));
+      bike.lean=lerp(bike.lean,bike.steer*clamp(Math.abs(bike.speed)/4.2,.12,.92),1-Math.pow(.04,sec));
+      const throttleTarget=strongest(THROTTLE);
+      bike.throttle=lerp(bike.throttle,throttleTarget,1-Math.pow(.012,sec));
+      const throttleLevel=bike.throttle;
+      const targetSign=gear==='D'?1:-1;
+      if(throttleLevel>.02){
+        const fullAcc=targetSign>0?bike.acceleration:bike.reverseAcceleration;
+        const acc=fullAcc*throttleLevel;
+        if(Math.sign(bike.speed)!==0&&Math.sign(bike.speed)!==targetSign) bike.speed+=targetSign*acc*1.55*sec;
+        else bike.speed+=targetSign*acc*sec;
+      } else {
+        const dec=(bike.rolling+bike.drag*Math.abs(bike.speed)*.2)*sec;
+        if(Math.abs(bike.speed)<=dec) bike.speed=0; else bike.speed-=Math.sign(bike.speed)*dec;
+      }
+      bike.speed=clamp(bike.speed,-bike.maxReverse,bike.maxForward);
+      const speedAbs=Math.abs(bike.speed);
+      const steerAuthority=.28+Math.min(1,speedAbs/3.8)*.55;
+      // Speed-sensitive turn rate with a soft deadzone for stable straight-line travel.
+      const steerEff=Math.abs(bike.steer)<.04?0:bike.steer;
+      bike.heading+=steerEff*bike.speed*.155*steerAuthority*sec;
+      const f=forward(bike.heading);
+      bike.x+=f.x*bike.speed*sec; bike.z+=f.z*bike.speed*sec;
+
+      if(current().requireReverseEntry && gear==='R' && bike.speed<-.05 && overlapOBB(bikeParkingBody(),current().spot,0)){
+        reverseEntrySeen=true;
+      }
+
+      if(collides()) fail();
+      const inside=fullyInsideSpot();
+      const directionOK=requiredDirectionMet();
+      const reverseEntryOK=reverseEntryRequirementMet();
+      const validPark=inside&&directionOK&&reverseEntryOK;
+      if(validPark&&Math.abs(bike.speed)<.22) parkedHold+=sec; else parkedHold=Math.max(0,parkedHold-sec*1.7);
+      if(parkedHold>.75) complete();
+
+      const pct=alignmentPercent(); meterFill.style.width=`${pct}%`;
+      const kmh=Math.abs(bike.speed)*3.6;
+      speedValue.textContent=Math.round(kmh);
+      // Needle sweeps −120° (0) to +120° (~40 km/h full scale).
+      const needleAngle=-120+clamp(kmh/40,0,1)*240;
+      speedNeedle.style.transform=`rotate(${needleAngle}deg)`;
+    }
+
+    const f=forward(bike.heading), idealX=bike.x-f.x*7.6, idealZ=bike.z-f.z*7.6;
+    camera.x=lerp(camera.x,idealX,1-Math.pow(.028,sec));
+    camera.z=lerp(camera.z,idealZ,1-Math.pow(.028,sec));
+    camera.yaw=lerpAngle(camera.yaw,bike.heading,1-Math.pow(.04,sec));
+    cameraShake=Math.max(0,cameraShake-sec*45); flash=Math.max(0,flash-sec*2.8);
+    damageFlash.style.opacity=String(flash*.38);
+    updateParticles(sec);
+    updateEngine();
+  }
+
+  function camSpace(p){
+    const dx=p.x-camera.x,dz=p.z-camera.z,r=right(camera.yaw),f=forward(camera.yaw);
+    return {x:dx*r.x+dz*r.z,z:dx*f.x+dz*f.z,y:p.y||0};
+  }
+  function projectCameraPoint(c){
+    return {x:W/2+c.x*focal/c.z,y:horizon+(camera.height-c.y)*focal/c.z,z:c.z};
+  }
+  function proj(p){
+    const c=camSpace(p); if(c.z<.25)return null;
+    return projectCameraPoint(c);
+  }
+
+  // Clip world-space polygons against the chase camera's near plane instead of
+  // dropping the entire object when a single corner goes behind the camera.
+  // This is especially important for long parking-lot curbs viewed from close range.
+  function clippedProjectedPolygon(worldPoints,near=.25){
+    let input=worldPoints.map(camSpace);
+    if(!input.length)return [];
+    const output=[];
+    for(let i=0;i<input.length;i++){
+      const a=input[i],b=input[(i+1)%input.length];
+      const aInside=a.z>=near,bInside=b.z>=near;
+      if(aInside)output.push(a);
+      if(aInside!==bInside){
+        const t=(near-a.z)/(b.z-a.z);
+        output.push({x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),z:near});
+      }
+    }
+    return output.map(projectCameraPoint);
+  }
+
+  function poly(points,fill,stroke=null,lineWidth=1){
+    if(points.some(p=>!p))return;
+    ctx.beginPath();ctx.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)ctx.lineTo(points[i].x,points[i].y);ctx.closePath();
+    if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lineWidth;ctx.stroke();}
+  }
+
+  function drawSky(){
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#6f98b5');g.addColorStop(.38,'#b8ced8');g.addColorStop(.39,'#9fabb0');g.addColorStop(1,'#30383a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(255,244,210,.56)';ctx.beginPath();ctx.arc(W*.78,H*.16,48,0,Math.PI*2);ctx.fill();
+    const skylineY=horizon+8;
+    ctx.fillStyle='#61727b';
+    for(let i=0;i<22;i++){const x=i*W/21-30,w=35+(i%4)*16,h=25+((i*19)%75);ctx.fillRect(x,skylineY-h,w,h);}
+    ctx.fillStyle='rgba(220,233,238,.3)';ctx.fillRect(0,skylineY-3,W,6);
+  }
+
+  function drawGround(){
+    const far=140, near=.7, half=70;
+    const quad=[proj({x:camera.x+right(camera.yaw).x*(-half)+forward(camera.yaw).x*far,z:camera.z+right(camera.yaw).z*(-half)+forward(camera.yaw).z*far,y:0}),
+                proj({x:camera.x+right(camera.yaw).x*(half)+forward(camera.yaw).x*far,z:camera.z+right(camera.yaw).z*(half)+forward(camera.yaw).z*far,y:0}),
+                proj({x:camera.x+right(camera.yaw).x*(half)+forward(camera.yaw).x*near,z:camera.z+right(camera.yaw).z*(half)+forward(camera.yaw).z*near,y:0}),
+                proj({x:camera.x+right(camera.yaw).x*(-half)+forward(camera.yaw).x*near,z:camera.z+right(camera.yaw).z*(-half)+forward(camera.yaw).z*near,y:0})];
+    poly(quad,'#31383a');
+
+    ctx.save();ctx.globalAlpha=.18;ctx.strokeStyle='#d6dde0';ctx.lineWidth=1;
+    const b=current().bounds;
+    for(let x=Math.floor(b.x-b.width/2);x<=b.x+b.width/2;x+=2){const a=proj({x,z:b.z-b.length/2,y:.01}),c=proj({x,z:b.z+b.length/2,y:.01});if(a&&c){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(c.x,c.y);ctx.stroke();}}
+    for(let z=Math.floor(b.z-b.length/2);z<=b.z+b.length/2;z+=2){const a=proj({x:b.x-b.width/2,z,y:.01}),c=proj({x:b.x+b.width/2,z,y:.01});if(a&&c){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(c.x,c.y);ctx.stroke();}}
+    ctx.restore();
+  }
+
+  function groundRect(o,fill,stroke,lineWidth=2){
+    const points=clippedProjectedPolygon(rectCorners(o).map(p=>({x:p.x,z:p.z,y:.025})));
+    if(points.length>=3)poly(points,fill,stroke,lineWidth);
+  }
+
+  function drawParkingSpot(s){
+    groundRect(s,'rgba(255,210,47,.13)','rgba(255,226,86,.98)',3);
+    const f=forward(s.heading),r=right(s.heading);
+    for(let t=-s.length/2+.35;t<s.length/2;t+=.58){
+      const p1={x:s.x+r.x*(-s.width/2+.08)+f.x*t,z:s.z+r.z*(-s.width/2+.08)+f.z*t};
+      const p2={x:s.x+r.x*(s.width/2-.08)+f.x*(t+.35),z:s.z+r.z*(s.width/2-.08)+f.z*(t+.35)};
+      const a=proj({...p1,y:.035}),b=proj({...p2,y:.035});if(a&&b){ctx.strokeStyle='rgba(255,220,70,.22)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+    }
+    const level=current();
+    if(typeof level.requiredHeading==='number'){
+      const af=forward(level.requiredHeading), ar=right(level.requiredHeading);
+      const tail={x:s.x-af.x*.55,z:s.z-af.z*.55,y:.065};
+      const tip={x:s.x+af.x*.72,z:s.z+af.z*.72,y:.065};
+      const leftWing={x:tip.x-af.x*.34+ar.x*.28,z:tip.z-af.z*.34+ar.z*.28,y:.065};
+      const rightWing={x:tip.x-af.x*.34-ar.x*.28,z:tip.z-af.z*.34-ar.z*.28,y:.065};
+      const pts=[tail,tip,leftWing,tip,rightWing].map(proj);
+      if(pts.every(Boolean)){
+        ctx.save();ctx.strokeStyle='rgba(106,247,157,.98)';ctx.lineWidth=4;ctx.lineCap='round';ctx.lineJoin='round';
+        ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);ctx.lineTo(pts[1].x,pts[1].y);ctx.lineTo(pts[2].x,pts[2].y);ctx.moveTo(pts[1].x,pts[1].y);ctx.lineTo(pts[4].x,pts[4].y);ctx.stroke();ctx.restore();
+      }
+    }
+    const label=proj({x:s.x,z:s.z,y:.06});
+    if(label){const scale=clamp(focal/Math.max(4,label.z)*.04,10,34);ctx.save();ctx.fillStyle='rgba(255,239,140,.95)';ctx.textAlign='center';ctx.font=`900 ${scale}px system-ui`;ctx.fillText(typeof current().requiredHeading==='number'?'REVERSE':'PARK',label.x,label.y);ctx.restore();}
+  }
+
+  function shade(hex,f){
+    const n=parseInt(hex.slice(1),16);let r=(n>>16)*f,g=((n>>8)&255)*f,b=(n&255)*f;return `rgb(${clamp(r,0,255)|0},${clamp(g,0,255)|0},${clamp(b,0,255)|0})`;
+  }
+
+  function drawBox(o,baseColor){
+    const corners=rectCorners(o),h=o.height||1;
+    const bot=corners.map(p=>({x:p.x,z:p.z,y:0}));
+    const top=corners.map(p=>({x:p.x,z:p.z,y:h}));
+    const cameraBottom=bot.map(camSpace);
+    const faces=[
+      {world:[bot[0],bot[1],top[1],top[0]],fill:shade(baseColor,.78),d:(cameraBottom[0].z+cameraBottom[1].z)/2},
+      {world:[bot[1],bot[2],top[2],top[1]],fill:shade(baseColor,.57),d:(cameraBottom[1].z+cameraBottom[2].z)/2},
+      {world:[bot[2],bot[3],top[3],top[2]],fill:shade(baseColor,.68),d:(cameraBottom[2].z+cameraBottom[3].z)/2},
+      {world:[bot[3],bot[0],top[0],top[3]],fill:shade(baseColor,.9),d:(cameraBottom[3].z+cameraBottom[0].z)/2}
+    ].sort((a,b)=>b.d-a.d);
+    let drew=false;
+    for(const face of faces){
+      const points=clippedProjectedPolygon(face.world);
+      if(points.length>=3){poly(points,face.fill,'rgba(0,0,0,.32)',1);drew=true;}
+    }
+    const projectedTop=clippedProjectedPolygon(top);
+    if(projectedTop.length>=3){poly(projectedTop,shade(baseColor,1.12),'rgba(255,255,255,.28)',1);drew=true;}
+    if(!drew)return null;
+    return {bot:bot.map(proj),top:top.map(proj),worldTop:top};
+  }
+
+  function drawCar(c){
+    const parts=drawBox(c,c.color); if(!parts)return;
+    const f=forward(c.heading),r=right(c.heading);
+    const cabin={x:c.x-f.x*.12,z:c.z-f.z*.12,width:c.width*.78,length:c.length*.48,heading:c.heading,height:c.height+.02};
+    const cc=rectCorners(cabin),bottom=cc.map(p=>proj({x:p.x,z:p.z,y:c.height*.56})),top=cc.map(p=>proj({x:p.x,z:p.z,y:c.height*1.05}));
+    if(!bottom.some(p=>!p)&&!top.some(p=>!p)){
+      poly([bottom[0],bottom[1],top[1],top[0]],'rgba(28,45,58,.88)','rgba(255,255,255,.18)',1);
+      poly([bottom[1],bottom[2],top[2],top[1]],'rgba(20,34,47,.9)','rgba(255,255,255,.16)',1);
+      poly([bottom[3],bottom[0],top[0],top[3]],'rgba(37,57,70,.88)','rgba(255,255,255,.17)',1);
+      poly(top,shade(c.color,1.03),'rgba(255,255,255,.2)',1);
+    }
+    const rear1=proj({x:c.x+r.x*.58-f.x*(c.length/2+.015),z:c.z+r.z*.58-f.z*(c.length/2+.015),y:.52});
+    const rear2=proj({x:c.x-r.x*.58-f.x*(c.length/2+.015),z:c.z-r.z*.58-f.z*(c.length/2+.015),y:.52});
+    for(const p of [rear1,rear2])if(p){const sz=clamp(focal/p.z*.07,2,12);ctx.fillStyle='#ff3e47';ctx.fillRect(p.x-sz,p.y-sz*.45,sz*2,sz*.9);}
+  }
+
+  function drawCurb(c){
+    const col='#b9b5aa';drawBox(c,col);
+    const corners=clippedProjectedPolygon(rectCorners(c).map(p=>({x:p.x,z:p.z,y:c.height+.01})));
+    if(corners.length>=3){ctx.save();ctx.setLineDash([13,10]);poly(corners,'rgba(235,232,220,.25)','#f0c74d',3);ctx.restore();}
+  }
+
+  function drawRoadMarkings(){
+    const b=current().bounds;
+    groundRect({x:b.x,z:b.z,width:b.width,length:b.length,heading:0},'rgba(31,36,38,.2)','rgba(235,239,239,.4)',2);
+    const f=forward(0),r=right(0);
+    for(let z=b.z-b.length/2+3;z<b.z+b.length/2;z+=6){
+      const a=proj({x:b.x-.05,z,y:.03}),c=proj({x:b.x+.05,z:z+2.2,y:.03});if(a&&c){ctx.strokeStyle='rgba(245,245,225,.22)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(c.x,c.y);ctx.stroke();}
+    }
+  }
+
+  function drawWorld(){
+    drawSky(); drawGround(); drawRoadMarkings(); drawParkingSpot(current().spot);
+    const objects=[];
+    for(const c of current().cars){const d=camSpace({x:c.x,z:c.z,y:0}).z;if(d>.3)objects.push({d,fn:()=>drawCar(c)});}
+    for(const c of current().curbs){const d=camSpace({x:c.x,z:c.z,y:0}).z;if(d>.3)objects.push({d,fn:()=>drawCurb(c)});}
+    objects.sort((a,b)=>b.d-a.d); for(const o of objects)o.fn();
+  }
+
+  function drawBike(){
+    const cx=W/2+cameraShake*(Math.random()-.5)*.35, baseY=H*.78+cameraShake*(Math.random()-.5)*.35;
+    const t=performance.now()*.001;
+    const speedBob=Math.sin(t*5.2)*Math.min(1.6,Math.abs(bike.speed)*.22);
+    const lean=bike.lean*.22;
+    ctx.save();ctx.translate(cx,baseY+speedBob);ctx.rotate(lean);
+    const scale=clamp(H/850,.78,1.18);ctx.scale(scale,scale);
+    ctx.fillStyle='rgba(0,0,0,.34)';ctx.beginPath();ctx.ellipse(0,68,47,13,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#111820';ctx.beginPath();ctx.ellipse(0,56,16,34,0,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#77818c';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(0,40);ctx.lineTo(0,-23);ctx.stroke();
+    ctx.fillStyle='#cf3346';ctx.beginPath();ctx.moveTo(-24,31);ctx.lineTo(-31,-18);ctx.quadraticCurveTo(0,-47,31,-18);ctx.lineTo(24,31);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#ff5868';ctx.beginPath();ctx.moveTo(-18,18);ctx.lineTo(-23,-14);ctx.quadraticCurveTo(0,-31,23,-14);ctx.lineTo(18,18);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#202a34';ctx.fillRect(-18,-1,36,37);
+    ctx.fillStyle='#10151b';ctx.beginPath();ctx.ellipse(0,-24,20,31,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#d7ad86';ctx.beginPath();ctx.arc(0,-58,14,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#19232f';ctx.beginPath();ctx.arc(0,-60,16,Math.PI,Math.PI*2);ctx.lineTo(15,-54);ctx.lineTo(-15,-54);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='#dae3ea';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-28,-38);ctx.lineTo(28,-38);ctx.stroke();
+    ctx.strokeStyle='#263442';ctx.lineWidth=9;ctx.beginPath();ctx.moveTo(-9,-26);ctx.lineTo(-27,-39);ctx.moveTo(9,-26);ctx.lineTo(27,-39);ctx.stroke();
+    ctx.fillStyle='#fff3aa';ctx.fillRect(-8,-28,16,7);
+    ctx.fillStyle='#ff3748';ctx.fillRect(-9,29,18,7);
+    ctx.restore();
+  }
+
+  function spawnSuccess(){
+    for(let i=0;i<100;i++)particles.push({x:W/2+(Math.random()-.5)*120,y:H*.46+Math.random()*80,vx:(Math.random()-.5)*160,vy:-80-Math.random()*190,life:1+Math.random(),size:3+Math.random()*6,color:palette[i%palette.length]});
+  }
+  function updateParticles(sec){for(const p of particles){p.x+=p.vx*sec;p.y+=p.vy*sec;p.vy+=280*sec;p.life-=sec;}particles=particles.filter(p=>p.life>0);}
+  function drawParticles(){for(const p of particles){ctx.globalAlpha=clamp(p.life,0,1);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);}ctx.globalAlpha=1;}
+
+  function render(){ctx.clearRect(0,0,W,H);drawWorld();drawBike();drawParticles();}
+
+  function normalizeKey(e){return e.key===';'?';':e.key.toLowerCase();}
+  window.addEventListener('keydown',e=>{
+    const k=normalizeKey(e);
+    if([...Object.keys(LEFT),...Object.keys(RIGHT),...Object.keys(THROTTLE),'r','enter',' '].includes(k))e.preventDefault();
+    ensureAudio();
+    if(k==='r'&&!e.repeat&&mode==='playing'){gear=gear==='D'?'R':'D';updateHud();playShift();}
+    if((k==='enter'||k===' ')&&mode!=='playing'&&!e.repeat)startOrAdvance();
+    keys.add(k);
+  });
+  window.addEventListener('keyup',e=>{keys.delete(normalizeKey(e));});
+  window.addEventListener('blur',()=>{keys.clear();});
+
+  function drawSpeedTicks(){
+    if(!speedTicks) return;
+    const s=speedTicks.getContext('2d');
+    const size=speedTicks.width, cx=size/2, cy=size/2;
+    s.clearRect(0,0,size,size);
+    for(let i=0;i<=20;i++){
+      const t=i/20, ang=(-120+t*240)*Math.PI/180;
+      const major=i%5===0;
+      const r0=major?52:58, r1=64;
+      s.strokeStyle=major?'rgba(210,218,228,.85)':'rgba(140,150,162,.45)';
+      s.lineWidth=major?2:1;
+      s.beginPath();
+      s.moveTo(cx+Math.cos(ang)*r0, cy+Math.sin(ang)*r0);
+      s.lineTo(cx+Math.cos(ang)*r1, cy+Math.sin(ang)*r1);
+      s.stroke();
+    }
+  }
+  drawSpeedTicks();
+
+  let audioCtx=null,engineOsc=null,engineGain=null;
+  function ensureAudio(){
+    if(audioCtx){if(audioCtx.state==='suspended')audioCtx.resume();return;}
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    engineOsc=audioCtx.createOscillator();engineGain=audioCtx.createGain();
+    const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=700;
+    engineOsc.type='sawtooth';engineOsc.frequency.value=42;engineGain.gain.value=.0001;
+    engineOsc.connect(filter).connect(engineGain).connect(audioCtx.destination);engineOsc.start();
+  }
+  function updateEngine(){if(!audioCtx)return;const now=audioCtx.currentTime;engineOsc.frequency.setTargetAtTime(42+Math.abs(bike.speed)*17,now,.06);engineGain.gain.setTargetAtTime(mode==='playing'?.022+Math.abs(bike.speed)*.004:.004,now,.09);}
+  function tone(freq,dur,gain,type='sine',delay=0){if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain(),t=audioCtx.currentTime+delay;o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(gain,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(audioCtx.destination);o.start(t);o.stop(t+dur);}
+  function playShift(){tone(280,.09,.05,'square');tone(190,.12,.035,'square',.07);}
+  function playCrash(){tone(70,.55,.2,'sawtooth');tone(43,.7,.16,'square');tone(520,.11,.08,'square');}
+  function playSuccess(){tone(440,.18,.06);tone(660,.22,.06,'sine',.15);tone(880,.35,.07,'sine',.31);}
+
+  function loop(now){const dt=now-lastTime;lastTime=now;update(dt);render();requestAnimationFrame(loop);}
+  updateHud();resetLevel();mode='intro';overlay.classList.add('visible');
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
