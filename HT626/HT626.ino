@@ -28,10 +28,10 @@ const unsigned long BUTTON_DEBOUNCE_MS = 30;
 const float ADC_VREF = 5.0;   // Leonardo DEFAULT reference (AVCC)
 const int ADC_MAX = 1023;     // 10-bit ADC
 
-const float LOW_MIN  = 0.0;
-const float LOW_MAX  = 1.4;
-const float HIGH_MIN = 1.9;
-const float HIGH_MAX = 3.3;
+const float LOW_MIN  = 1.1;
+const float LOW_MAX  = 1.5;
+const float HIGH_MIN = 1.8;
+const float HIGH_MAX = 2.2;
 
 const char KEYS_LOW[]  = { ';', 'l', 'k', 'j', 'h' };
 const char KEYS_HIGH[] = { 'g', 'f', 'd', 's', 'a' };
